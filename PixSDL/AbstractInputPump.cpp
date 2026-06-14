@@ -1,0 +1,126 @@
+#include "AbstractInputPump.h"
+#include "PixMath.h"
+
+namespace pix
+{
+
+	VirtualAxis::VirtualAxis(const std::string& name, int id, float deadZone) :
+		name_(name),
+		id_(id)
+	{
+		SetDeadZone(deadZone);
+	}
+
+	void VirtualAxis::BeginUpdate()
+	{
+		prevAxisState_ = axisState_;
+	}
+
+	void VirtualAxis::SetAxisState(float state)
+	{
+		state = GetClamped(state, -1.0f, 1.0f);
+
+		axisState_ = std::abs(state) > deadZone_ ? state : 0.0f;
+	}
+
+	float VirtualAxis::GetAxisState() const
+	{
+		return axisState_;
+	}
+
+	float VirtualAxis::GetEffectiveAxisState() const
+	{
+		// When deadZone_ == 1, axisState_ is 0, so division by zero cannot occur
+		const float effectiveRange = 1.0f - deadZone_;
+
+		if (axisState_ > 0.0f)
+			return (axisState_ - deadZone_) / effectiveRange;
+
+		if (axisState_ < 0.0f)
+			return (axisState_ + deadZone_) / effectiveRange;
+
+		return 0.0f;
+	}
+
+	void VirtualAxis::SetDeadZone(float value)
+	{
+		deadZone_ = GetClamped(value, 0.0f, 1.0f);
+
+		if (std::abs(axisState_) <= deadZone_)
+			axisState_ = 0.0f;
+	}
+
+	float VirtualAxis::GetDeadZone() const
+	{
+		return deadZone_;
+	}
+
+	void VirtualAxis::ClearState()
+	{
+		axisState_ = 0.0f;
+		prevAxisState_ = 0.0f;
+	}
+
+	bool VirtualAxis::IsPositive() const { return axisState_ > 0.0f; }
+	bool VirtualAxis::BecamePositive() const { return prevAxisState_ <= 0.0f && axisState_ > 0.0f; }
+	bool VirtualAxis::BecameZeroFromPositive() const { return prevAxisState_ > 0.0f && axisState_ == 0.0f; }
+	bool VirtualAxis::IsNegative() const { return axisState_ < 0.0f; }
+	bool VirtualAxis::BecameNegative() const { return prevAxisState_ >= 0.0f && axisState_ < 0.0f; }
+	bool VirtualAxis::BecameZeroFromNegative() const { return prevAxisState_ < 0.0f && axisState_ == 0.0f; }
+	bool VirtualAxis::BecameZero() const { return prevAxisState_ != 0.0f && axisState_ == 0.0f; }
+
+
+	const std::string& VirtualAxis::GetName() const
+	{
+		return name_;
+	}
+
+	int VirtualAxis::GetID() const
+	{
+		return id_;
+	}
+
+	AbstractInputPump::AbstractInputPump(VirtualAxis& virtualAxis, PumpFunction pumpFunction) :
+		pumpFunction_(pumpFunction ? pumpFunction : DefaultPumpFunction),
+		virtualAxis_(&virtualAxis),
+		cachedAxisID_(virtualAxis.GetID())
+	{}
+
+	void AbstractInputPump::Pump()
+	{
+		if (Enabled)
+			virtualAxis_->SetAxisState(pumpFunction_(GetSourceState(), virtualAxis_->GetAxisState()));
+	}
+
+	void AbstractInputPump::SetVirtualAxis(VirtualAxis& virtualAxis)
+	{
+		virtualAxis_ = &virtualAxis;
+		cachedAxisID_ = virtualAxis.GetID();
+	}
+
+	void AbstractInputPump::SetPumpFunction(PumpFunction pumpFunction)
+	{
+		pumpFunction_ = pumpFunction ? pumpFunction : DefaultPumpFunction;
+	}
+
+	AbstractInputPump::PumpFunction AbstractInputPump::GetPumpFunction() const
+	{
+		return pumpFunction_;
+	}
+
+	VirtualAxis& AbstractInputPump::GetVirtualAxis() const
+	{
+		return *virtualAxis_;
+	}
+
+	int AbstractInputPump::GetCachedAxisID() const
+	{
+		return cachedAxisID_;
+	}
+
+	float AbstractInputPump::DefaultPumpFunction(float sourceState, float axisState)
+	{
+		return (std::abs(sourceState) < std::abs(axisState)) ? axisState : sourceState;
+	}
+
+}

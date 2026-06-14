@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{a739b907-99fc-46d0-ad0d-ab91cca5f670}</ProjectGuid>
+    <RootNamespace>PixSDL</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>Default</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)SDL2\SDL2-2.32.10\include;$(SolutionDir)SDL2\SDL2_image-2.8.8\include;$(SolutionDir)SDL2\SDL2_ttf-2.24.0\include;$(SolutionDir)SDL2\SDL2_mixer-2.8.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)SDL2\SDL2-2.32.10\lib\x64;$(SolutionDir)SDL2\SDL2_image-2.8.8\lib\x64;$(SolutionDir)SDL2\SDL2_ttf-2.24.0\lib\x64;$(SolutionDir)SDL2\SDL2_mixer-2.8.1\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)Textures" "$(OutDir)Textures\"
+copy /Y "$(SolutionDir)SDL2\SDL2-2.32.10\lib\x64\SDL2.dll" "$(OutDir)"
+copy /Y "$(SolutionDir)SDL2\SDL2_image-2.8.8\lib\x64\SDL2_image.dll" "$(OutDir)"
+copy /Y "$(SolutionDir)SDL2\SDL2_ttf-2.24.0\lib\x64\SDL2_ttf.dll" "$(OutDir)"
+copy /Y "$(SolutionDir)SDL2\SDL2_mixer-2.8.1\lib\x64\SDL2_mixer.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>Default</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)SDL2\SDL2-2.32.10\include;$(SolutionDir)SDL2\SDL2_image-2.8.8\include;$(SolutionDir)SDL2\SDL2_ttf-2.24.0\include;$(SolutionDir)SDL2\SDL2_mixer-2.8.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Sync</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)SDL2\SDL2-2.32.10\lib\x64;$(SolutionDir)SDL2\SDL2_image-2.8.8\lib\x64;$(SolutionDir)SDL2\SDL2_ttf-2.24.0\lib\x64;$(SolutionDir)SDL2\SDL2_mixer-2.8.1\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)Textures" "$(OutDir)Textures\"
+copy /Y "$(SolutionDir)SDL2\SDL2-2.32.10\lib\x64\SDL2.dll" "$(OutDir)"
+copy /Y "$(SolutionDir)SDL2\SDL2_image-2.8.8\lib\x64\SDL2_image.dll" "$(OutDir)"
+copy /Y "$(SolutionDir)SDL2\SDL2_ttf-2.24.0\lib\x64\SDL2_ttf.dll" "$(OutDir)"
+copy /Y "$(SolutionDir)SDL2\SDL2_mixer-2.8.1\lib\x64\SDL2_mixer.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AbstractInputPump.cpp" />
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="ErrorLogger.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameLoop.cpp" />
+    <ClCompile Include="ImageTexture.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputPumps.cpp" />
+    <ClCompile Include="LaunchConfig.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mesh2DOps.cpp" />
+    <ClCompile Include="Mesh3DOps.cpp" />
+    <ClCompile Include="MeshAnimatorOps.cpp" />
+    <ClCompile Include="MeshRenderer2D.cpp" />
+    <ClCompile Include="MeshRenderer3D.cpp" />
+    <ClCompile Include="MeshSprite2D.cpp" />
+    <ClCompile Include="MeshSprite2DNode.cpp" />
+    <ClCompile Include="MeshSprite3D.cpp" />
+    <ClCompile Include="MeshSprite3DNode.cpp" />
+    <ClCompile Include="MovableObject2D.cpp" />
+    <ClCompile Include="MovableObject3D.cpp" />
+    <ClCompile Include="ObjectInput.cpp" />
+    <ClCompile Include="PathUtils.cpp" />
+    <ClCompile Include="PixMath.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="SoundEffect.cpp" />
+    <ClCompile Include="Spaceship.cpp" />
+    <ClCompile Include="Sprite2D.cpp" />
+    <ClCompile Include="Sprite2DNode.cpp" />
+    <ClCompile Include="Sprite3D.cpp" />
+    <ClCompile Include="Sprite3DNode.cpp" />
+    <ClCompile Include="SpriteMeshOps.cpp" />
+    <ClCompile Include="SpriteMeshRenderer2D.cpp" />
+    <ClCompile Include="SpriteMeshRenderer3D.cpp" />
+    <ClCompile Include="StreamingTexture.cpp" />
+    <ClCompile Include="TargetTexture.cpp" />
+    <ClCompile Include="TextTexture.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureOps.cpp" />
+    <ClCompile Include="UpdateLoopScheduler.cpp" />
+    <ClCompile Include="UVOps.cpp" />
+    <ClCompile Include="Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AbstractInputPump.h" />
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="ClassStyleReference.h" />
+    <ClInclude Include="ErrorLogger.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameLoop.h" />
+    <ClInclude Include="GeometryUtils2D.h" />
+    <ClInclude Include="GeometryUtils3D.h" />
+    <ClInclude Include="ImageTexture.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="InputPumps.h" />
+    <ClInclude Include="LaunchConfig.h" />
+    <ClInclude Include="Mesh2D.h" />
+    <ClInclude Include="Mesh2DOps.h" />
+    <ClInclude Include="Mesh3D.h" />
+    <ClInclude Include="Mesh3DOps.h" />
+    <ClInclude Include="MeshAnimator.h" />
+    <ClInclude Include="MeshAnimatorOps.h" />
+    <ClInclude Include="MeshRenderer2D.h" />
+    <ClInclude Include="MeshRenderer3D.h" />
+    <ClInclude Include="MeshSprite2D.h" />
+    <ClInclude Include="MeshSprite2DNode.h" />
+    <ClInclude Include="MeshSprite3D.h" />
+    <ClInclude Include="MeshSprite3DNode.h" />
+    <ClInclude Include="MovableObject2D.h" />
+    <ClInclude Include="MovableObject3D.h" />
+    <ClInclude Include="ObjectInput.h" />
+    <ClInclude Include="PathUtils.h" />
+    <ClInclude Include="PixMath.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="SoundEffect.h" />
+    <ClInclude Include="Spaceship.h" />
+    <ClInclude Include="Sprite2D.h" />
+    <ClInclude Include="Sprite2DNode.h" />
+    <ClInclude Include="Sprite3D.h" />
+    <ClInclude Include="Sprite3DNode.h" />
+    <ClInclude Include="SpriteMesh.h" />
+    <ClInclude Include="SpriteMeshOps.h" />
+    <ClInclude Include="SpriteMeshRenderer2D.h" />
+    <ClInclude Include="SpriteMeshRenderer3D.h" />
+    <ClInclude Include="StreamingTexture.h" />
+    <ClInclude Include="TargetTexture.h" />
+    <ClInclude Include="TextTexture.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureOps.h" />
+    <ClInclude Include="Uncopyable.h" />
+    <ClInclude Include="UpdateLoopScheduler.h" />
+    <ClInclude Include="UV.h" />
+    <ClInclude Include="UVOps.h" />
+    <ClInclude Include="Window.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

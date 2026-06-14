@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="PixSDL/PixSDL.vcxproj" Id="a739b907-99fc-46d0-ad0d-ab91cca5f670" />
+</Solution>

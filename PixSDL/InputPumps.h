@@ -1,0 +1,124 @@
+#pragma once
+
+#include "AbstractInputPump.h"
+#include "Input.h"
+
+// These pump classes internally query KeyboardInput, MouseInput, and GamepadInput
+
+namespace pix
+{
+
+	// KeyboardInputPump has a physical keyboard key as its input source. It connects it to a virtual axis.
+	class KeyboardInputPump : public AbstractInputPump
+	{
+	public:
+
+		KeyboardInputPump(SDL_Scancode sourceKey, VirtualAxis& targetAxis, AbstractInputPump::PumpFunction pumpFunction = nullptr);
+
+		~KeyboardInputPump() override = default;
+
+		void SetSourceKey(SDL_Scancode sourceKey);
+
+		// Returns 1.0f if key is pressed, 0.0f otherwise
+		float GetSourceState() const override;
+
+		SDL_Scancode GetSourceKey() const;
+
+
+	private:
+
+		SDL_Scancode sourceKey_;
+
+	};
+
+
+
+	// MouseButtonInputPump has a physical mouse button as its input source. It connects it to a virtual axis.
+	// This pump only handles button state; position/wheel are handled elsewhere.
+	class MouseButtonInputPump : public AbstractInputPump
+	{
+	public:
+
+		MouseButtonInputPump(MouseInput::Button sourceButton, VirtualAxis& targetAxis, AbstractInputPump::PumpFunction pumpFunction = nullptr);
+
+		~MouseButtonInputPump() override = default;
+
+		void SetSourceButton(MouseInput::Button sourceButton);
+
+		// Returns 1.0f if button is pressed, 0.0f otherwise
+		float GetSourceState() const override;
+
+		MouseInput::Button GetSourceButton() const;
+
+	private:
+
+		MouseInput::Button sourceButton_;
+	};
+
+
+
+	// GamepadInputPump has a physical gamepad button or a physical gamepad axis as its input source. It connects it to a virtual axis.
+	class GamepadInputPump : public AbstractInputPump
+	{
+	public:
+
+		GamepadInputPump(int sourceGamepadIndex, SDL_GameControllerButton sourceButton, VirtualAxis& targetAxis, AbstractInputPump::PumpFunction pumpFunction = nullptr);
+
+		GamepadInputPump(int sourceGamepadIndex, SDL_GameControllerAxis sourceAxis, VirtualAxis& targetAxis, AbstractInputPump::PumpFunction pumpFunction = nullptr);
+
+		~GamepadInputPump() override = default;
+
+		void SetSourceGamepadIndex(int sourceGamepadIndex);
+
+		void SetSourceButton(SDL_GameControllerButton sourceButton);
+
+		void SetSourceAxis(SDL_GameControllerAxis sourceAxis);
+
+		// For axis: returns a value in range [-1.0f, 1.0f] 
+		// For button: returns 1.0f if pressed, 0.0f otherwise
+		float GetSourceState() const override;
+
+		int GetSourceGamepadIndex() const;
+		SDL_GameControllerButton GetSourceButton() const;
+		SDL_GameControllerAxis  GetSourceAxis() const;
+
+	private:
+
+		int sourceGamepadIndex_ = -1;
+		SDL_GameControllerButton sourceButton_ = SDL_CONTROLLER_BUTTON_INVALID;
+		SDL_GameControllerAxis   sourceAxis_ = SDL_CONTROLLER_AXIS_INVALID;
+	};
+
+
+
+	// VirtualInputPump has a virtual analog value as its input source.
+	// It is driven directly by user code and connects that source to a virtual axis.
+	// The source ID serves to differentiate between input sources, and its validity depends on the owner.
+	// A typical use case is AI-driven input.
+	class VirtualInputPump : public AbstractInputPump
+	{
+	public:
+
+		VirtualInputPump(int sourceID, VirtualAxis& targetAxis, AbstractInputPump::PumpFunction pumpFunction = nullptr);
+
+		~VirtualInputPump() override = default;
+
+		// Clamps and sets the virtual source state in range [-1.0f, 1.0f].
+		// VirtualInputPump is driven by user code via SetSourceState().
+		void SetSourceState(float state);
+
+		// sourceID serves to differentiate between input sources
+		void SetSourceID(int sourceID);
+
+		// Returns the value set by SetSourceState(), in range [-1.0f, 1.0f]
+		float GetSourceState() const override;
+
+		int GetSourceID() const;
+
+	private:
+
+		float sourceState_ = 0.0f;
+		int sourceID_ = -1;
+	};
+
+}

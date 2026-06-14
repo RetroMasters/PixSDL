@@ -1,0 +1,52 @@
+#pragma once
+
+#include "PixMath.h"
+
+namespace pix
+{
+	// MovableObject3D is the base class for a spatial 3D object. It represents only a transform: position, scale, rotation.
+	// 
+	// Philosophy:
+	// MovableObject3D is the foundation for 3D objects that move through space.
+	// It provides native support for visual motion interpolation by maintaining the previous transform state.
+	class MovableObject3D
+	{
+	public:
+
+		MovableObject3D() = default;
+		explicit MovableObject3D(const Transform3D& transform);
+		MovableObject3D(const Transform3D& transform, const Transform3D& prevTransform);
+		explicit MovableObject3D(const Vec3& position, const Vec3f& scale = Vec3f(1.0f, 1.0f, 1.0f), const Rotation3D& rotation = Rotation3D());
+
+		virtual ~MovableObject3D() = default;
+
+		// Syncs previous transform state with the current one.
+		// Call once per update tick before modifying Transform. 
+		// This snapshots the current transform into prevTransform_ for interpolation.
+		void BeginUpdate();
+
+		// Sets both current and previous transform state to transform.
+		// Use this for discontinuous movement such as teleporting, spawning, respawning,
+		// or camera jumps to prevent visual interpolation from the old transform.
+		void TeleportTo(const Transform3D& transform);
+
+		// Sets both current and previous position to position while scale and rotation stay unchanged.
+		// Use this for discontinuous position changes to prevent visual interpolation from the old position.
+		void TeleportTo(const Vec3& position);
+
+		// Shifts both the current and previous position by the same amount.
+		// The current position is moved to newPosition while scale and rotation stay unchanged.
+		// Use this to preserve continuous movement when the object is displaced or mirrored to another location.
+		void ShiftTo(const Vec3& newPosition);
+
+		const Transform3D& GetPrevTransform() const;
+
+		Transform3D Transform;
+
+	protected:
+
+		Transform3D prevTransform_;
+	};
+
+}
+

@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\PixSDL">
+      <UniqueIdentifier>{31fe1672-b3ec-469d-ac24-814a19fdbc73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL">
+      <UniqueIdentifier>{27a45332-84bf-434d-a938-29cdf8484127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Audio">
+      <UniqueIdentifier>{f752d456-0fde-4fe7-9dee-225ef110300f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\GameLoop">
+      <UniqueIdentifier>{d77f5f7c-afde-4bc0-a3cf-a919927ee452}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Graphics">
+      <UniqueIdentifier>{9c388b62-d38b-410d-8f58-337d37714b19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Input">
+      <UniqueIdentifier>{06c5a1e7-b1d8-4b2f-9dba-27bf24a3015b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Math">
+      <UniqueIdentifier>{db694fa0-d3af-4c88-ad9d-08ff5e95f81d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Misc">
+      <UniqueIdentifier>{22012a25-4524-4e86-bb63-7f1208c1ab1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Singletons">
+      <UniqueIdentifier>{ddcca906-2aad-41fe-9364-3abd082f0cdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Entities">
+      <UniqueIdentifier>{f6019e0c-edd9-4ae6-8910-4546a0c7faaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Entities\Entities2D">
+      <UniqueIdentifier>{08306918-a2bd-4b2b-835f-7ab388738122}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Entities\Entities3D">
+      <UniqueIdentifier>{916c0dd0-8fa2-424d-8dc5-68fc1f2d8aab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Graphics\Geometry2D">
+      <UniqueIdentifier>{47f966a9-21a6-4fc3-a8bc-e775e0219b4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Graphics\Geometry3D">
+      <UniqueIdentifier>{85596b39-974f-4f1b-ab1e-c94d8d6c6f17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Graphics\Rendering3D">
+      <UniqueIdentifier>{d0923a59-acf1-4408-8e5b-d6aeaf375ea7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Audio">
+      <UniqueIdentifier>{f5813e0b-142c-4068-89c0-3d1da05543c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Entities">
+      <UniqueIdentifier>{28d35df9-494d-4e62-8787-f77b3ef6c137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Entities\Entities2D">
+      <UniqueIdentifier>{3bb2e9b4-0bec-468a-a635-b36bd6995188}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Entities\Entities3D">
+      <UniqueIdentifier>{c7868ca3-6372-47ee-830b-aa1e09a51aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\GameLoop">
+      <UniqueIdentifier>{39a99a08-d052-4f5e-8e73-9d20f12caddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Graphics">
+      <UniqueIdentifier>{ce0f96ab-89f8-4220-bd1f-cbe5473d9272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Graphics\Geometry2D">
+      <UniqueIdentifier>{64081d7a-4bec-46de-828e-b8bb20bf501f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Graphics\Geometry3D">
+      <UniqueIdentifier>{e2d2a605-bd4a-4d79-a48e-4b1530bb5aa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Graphics\MeshAnimation">
+      <UniqueIdentifier>{5ade2d3b-31a1-40c2-ba02-9adce6f4ded2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Graphics\Rendering3D">
+      <UniqueIdentifier>{20661332-2abe-469a-ba8e-e1cd869764f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Graphics\Rendering2D">
+      <UniqueIdentifier>{283bf448-771f-4c22-8857-db2bba94ec82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Graphics\Rendering2D">
+      <UniqueIdentifier>{308bd480-d5fd-44d8-b981-172580286188}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Graphics\MeshAnimation">
+      <UniqueIdentifier>{d2e5c3ad-4bac-41cb-918e-cb172492563a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Graphics\Textures">
+      <UniqueIdentifier>{346fcfc8-3fc9-49cf-96c6-1c377f4ec42b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PixSDL\Graphics\Textures">
+      <UniqueIdentifier>{7a95b2cd-9d17-4986-aa3e-93dd08e17677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Input">
+      <UniqueIdentifier>{7e559ba5-e67b-47db-8c9c-81a9fd477240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Math">
+      <UniqueIdentifier>{043440fe-d4f8-46a8-9308-707269c44635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Misc">
+      <UniqueIdentifier>{8cd5194c-b407-4af0-acc7-54e66e0b9b7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PixSDL\Singletons">
+      <UniqueIdentifier>{23b93f51-953a-4564-ba54-8fce85cff750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{029ead4e-60b8-4ac0-8a09-a6ff39b5739b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{bf206b5b-015b-4763-a137-d0b26108b83a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PixMath.cpp">
+      <Filter>Source Files\PixSDL\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="PathUtils.cpp">
+      <Filter>Source Files\PixSDL\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Source Files\PixSDL\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorLogger.cpp">
+      <Filter>Source Files\PixSDL\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\PixSDL\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="LaunchConfig.cpp">
+      <Filter>Source Files\PixSDL\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\PixSDL\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files\PixSDL\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetTexture.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageTexture.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="StreamingTexture.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="TextTexture.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureOps.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh2DOps.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Geometry2D</Filter>
+    </ClCompile>
+    <ClCompile Include="UVOps.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Geometry2D</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteMeshOps.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Geometry2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh3DOps.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Geometry3D</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshAnimatorOps.cpp">
+      <Filter>Source Files\PixSDL\Graphics\MeshAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer2D.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Rendering2D</Filter>
+    </ClCompile>
+    <ClCompile Include="MovableObject2D.cpp">
+      <Filter>Source Files\PixSDL\Entities\Entities2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite2D.cpp">
+      <Filter>Source Files\PixSDL\Entities\Entities2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite2DNode.cpp">
+      <Filter>Source Files\PixSDL\Entities\Entities2D</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshSprite2D.cpp">
+      <Filter>Source Files\PixSDL\Entities\Entities2D</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshSprite2DNode.cpp">
+      <Filter>Source Files\PixSDL\Entities\Entities2D</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteMeshRenderer2D.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Rendering2D</Filter>
+    </ClCompile>
+    <ClCompile Include="MovableObject3D.cpp">
+      <Filter>Source Files\PixSDL\Entities\Entities3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite3D.cpp">
+      <Filter>Source Files\PixSDL\Entities\Entities3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite3DNode.cpp">
+      <Filter>Source Files\PixSDL\Entities\Entities3D</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshSprite3D.cpp">
+      <Filter>Source Files\PixSDL\Entities\Entities3D</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshSprite3DNode.cpp">
+      <Filter>Source Files\PixSDL\Entities\Entities3D</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer3D.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Rendering3D</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteMeshRenderer3D.cpp">
+      <Filter>Source Files\PixSDL\Graphics\Rendering3D</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEffect.cpp">
+      <Filter>Source Files\PixSDL\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractInputPump.cpp">
+      <Filter>Source Files\PixSDL\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputPumps.cpp">
+      <Filter>Source Files\PixSDL\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectInput.cpp">
+      <Filter>Source Files\PixSDL\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLoop.cpp">
+      <Filter>Source Files\PixSDL\GameLoop</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateLoopScheduler.cpp">
+      <Filter>Source Files\PixSDL\GameLoop</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Spaceship.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PixMath.h">
+      <Filter>Header Files\PixSDL\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassStyleReference.h">
+      <Filter>Header Files\PixSDL\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Uncopyable.h">
+      <Filter>Header Files\PixSDL\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="PathUtils.h">
+      <Filter>Header Files\PixSDL\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Header Files\PixSDL\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorLogger.h">
+      <Filter>Header Files\PixSDL\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Header Files\PixSDL\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="LaunchConfig.h">
+      <Filter>Header Files\PixSDL\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header Files\PixSDL\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Header Files\PixSDL\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\PixSDL\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetTexture.h">
+      <Filter>Header Files\PixSDL\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageTexture.h">
+      <Filter>Header Files\PixSDL\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="StreamingTexture.h">
+      <Filter>Header Files\PixSDL\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="TextTexture.h">
+      <Filter>Header Files\PixSDL\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureOps.h">
+      <Filter>Header Files\PixSDL\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryUtils2D.h">
+      <Filter>Header Files\PixSDL\Graphics\Geometry2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh2D.h">
+      <Filter>Header Files\PixSDL\Graphics\Geometry2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh2DOps.h">
+      <Filter>Header Files\PixSDL\Graphics\Geometry2D</Filter>
+    </ClInclude>
+    <ClInclude Include="UV.h">
+      <Filter>Header Files\PixSDL\Graphics\Geometry2D</Filter>
+    </ClInclude>
+    <ClInclude Include="UVOps.h">
+      <Filter>Header Files\PixSDL\Graphics\Geometry2D</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteMesh.h">
+      <Filter>Header Files\PixSDL\Graphics\Geometry2D</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteMeshOps.h">
+      <Filter>Header Files\PixSDL\Graphics\Geometry2D</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryUtils3D.h">
+      <Filter>Header Files\PixSDL\Graphics\Geometry3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh3D.h">
+      <Filter>Header Files\PixSDL\Graphics\Geometry3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh3DOps.h">
+      <Filter>Header Files\PixSDL\Graphics\Geometry3D</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshAnimator.h">
+      <Filter>Header Files\PixSDL\Graphics\MeshAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshAnimatorOps.h">
+      <Filter>Header Files\PixSDL\Graphics\MeshAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer2D.h">
+      <Filter>Header Files\PixSDL\Graphics\Rendering2D</Filter>
+    </ClInclude>
+    <ClInclude Include="MovableObject2D.h">
+      <Filter>Header Files\PixSDL\Entities\Entities2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite2D.h">
+      <Filter>Header Files\PixSDL\Entities\Entities2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite2DNode.h">
+      <Filter>Header Files\PixSDL\Entities\Entities2D</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshSprite2D.h">
+      <Filter>Header Files\PixSDL\Entities\Entities2D</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshSprite2DNode.h">
+      <Filter>Header Files\PixSDL\Entities\Entities2D</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteMeshRenderer2D.h">
+      <Filter>Header Files\PixSDL\Graphics\Rendering2D</Filter>
+    </ClInclude>
+    <ClInclude Include="MovableObject3D.h">
+      <Filter>Header Files\PixSDL\Entities\Entities3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite3D.h">
+      <Filter>Header Files\PixSDL\Entities\Entities3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite3DNode.h">
+      <Filter>Header Files\PixSDL\Entities\Entities3D</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshSprite3D.h">
+      <Filter>Header Files\PixSDL\Entities\Entities3D</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshSprite3DNode.h">
+      <Filter>Header Files\PixSDL\Entities\Entities3D</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer3D.h">
+      <Filter>Header Files\PixSDL\Graphics\Rendering3D</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteMeshRenderer3D.h">
+      <Filter>Header Files\PixSDL\Graphics\Rendering3D</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEffect.h">
+      <Filter>Header Files\PixSDL\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractInputPump.h">
+      <Filter>Header Files\PixSDL\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputPumps.h">
+      <Filter>Header Files\PixSDL\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectInput.h">
+      <Filter>Header Files\PixSDL\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLoop.h">
+      <Filter>Header Files\PixSDL\GameLoop</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdateLoopScheduler.h">
+      <Filter>Header Files\PixSDL\GameLoop</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Spaceship.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

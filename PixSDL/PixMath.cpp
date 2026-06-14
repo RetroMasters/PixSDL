@@ -1,0 +1,690 @@
+
+#include "PixMath.h"
+#include <limits>
+
+namespace pix
+{
+	// ################################################################################ GENERAL FUNCTIONS #############################################################
+
+
+	float GetSafeDivision(float numerator, float denominator)
+	{
+		if (denominator == 0.0f)
+		{
+			if (numerator > 0.0f) return std::numeric_limits<float>::max();
+			if (numerator < 0.0f) return std::numeric_limits<float>::lowest();
+
+			return 0.0f; // 0/0 = 0
+		}
+
+		float result = numerator / denominator;
+
+		if (!std::isfinite(result))
+		{
+			if (result > 0.0f) return std::numeric_limits<float>::max();
+			if (result < 0.0f) return std::numeric_limits<float>::lowest();
+
+			return 0.0f;
+		}
+
+		return result;
+	}
+
+	double GetSafeDivision(double numerator, double denominator)
+	{
+		if (denominator == 0.0)
+		{
+			if (numerator > 0.0) return std::numeric_limits<double>::max();
+			if (numerator < 0.0) return std::numeric_limits<double>::lowest();
+
+			return 0.0; // 0/0 = 0
+		}
+
+		double result = numerator / denominator;
+
+		if (!std::isfinite(result))
+		{
+			if (result > 0.0) return std::numeric_limits<double>::max();
+			if (result < 0.0) return std::numeric_limits<double>::lowest();
+
+			return 0.0;
+		}
+
+		return result;
+	}
+
+
+	// ################################################################################### ROTATIONS ##################################################################
+
+
+	Rotation2D::Rotation2D(float degrees)
+	{
+		Set(degrees);
+	}
+
+	void Rotation2D::Set(float degrees)
+	{
+		degrees *= (float)RADIANS_PER_DEGREE;
+
+		// No need for normalization as numerical errors don't accumulate
+		xAxis_ = Vec2f(std::cos(degrees), std::sin(degrees));
+	}
+
+	Rotation2D& Rotation2D::AddRotation(float deltaDegrees)
+	{
+		deltaDegrees *= (float)RADIANS_PER_DEGREE;
+
+		Vec2f localXAxis(std::cos(deltaDegrees), std::sin(deltaDegrees));
+
+		xAxis_ = Vec2f(xAxis_.X * localXAxis.X - xAxis_.Y * localXAxis.Y,
+			xAxis_.Y * localXAxis.X + xAxis_.X * localXAxis.Y);
+
+		xAxis_.Normalize();
+		return *this;
+	}
+
+	Rotation2D& Rotation2D::AddRotation(const Rotation2D& deltaRotation)
+	{
+		xAxis_ = Vec2f(xAxis_.X * deltaRotation.xAxis_.X - xAxis_.Y * deltaRotation.xAxis_.Y,
+			xAxis_.Y * deltaRotation.xAxis_.X + xAxis_.X * deltaRotation.xAxis_.Y);
+
+		xAxis_.Normalize();
+		return *this;
+	}
+
+	void Rotation2D::SetToIdentity()
+	{
+		xAxis_ = Vec2f(1.0f, 0.0f);
+	}
+
+	Rotation2D& Rotation2D::Inverse()
+	{
+		xAxis_.Y = -xAxis_.Y;
+		return *this;
+	}
+
+	void Rotation2D::RotatePoint(Vec2f& point) const
+	{
+		point = Vec2f(xAxis_.X * point.X - xAxis_.Y * point.Y,
+			xAxis_.Y * point.X + xAxis_.X * point.Y);
+	}
+
+	void Rotation2D::InverseRotatePoint(Vec2f& point) const
+	{
+		point = Vec2f(xAxis_.X * point.X + xAxis_.Y * point.Y,
+			-xAxis_.Y * point.X + xAxis_.X * point.Y);
+	}
+
+	void Rotation2D::RotatePoint(Vec2& point) const
+	{
+		Vec2 xAxis(xAxis_); // Convert to Vec2 for repeated use
+
+		point = Vec2(xAxis.X * point.X - xAxis.Y * point.Y,
+			xAxis.Y * point.X + xAxis.X * point.Y);
+	}
+
+	void Rotation2D::InverseRotatePoint(Vec2& point) const
+	{
+		Vec2 xAxis(xAxis_); // Convert to Vec2 for repeated use
+
+		point = Vec2(xAxis.X * point.X + xAxis.Y * point.Y,
+			-xAxis.Y * point.X + xAxis.X * point.Y);
+	}
+
+	const Vec2f& Rotation2D::GetXAxis() const
+	{
+		return xAxis_;
+	}
+
+	Vec2f Rotation2D::GetYAxis() const
+	{
+		return Vec2f(-xAxis_.Y, xAxis_.X);
+	}
+
+	float Rotation2D::GetAngle() const
+	{
+		return std::atan2(xAxis_.Y, xAxis_.X) * (float)DEGREES_PER_RADIAN;
+	}
+
+	Rotation2D Rotation2D::GetInverse() const
+	{
+		return Rotation2D(xAxis_.X, -xAxis_.Y);
+	}
+
+	Rotation2D::Rotation2D(float x, float y) : xAxis_(x, y)
+	{}
+
+	bool Rotation2D::operator==(const Rotation2D& other) const
+	{
+		return xAxis_ == other.xAxis_;
+	}
+
+	bool Rotation2D::operator!=(const Rotation2D& other) const
+	{
+		return xAxis_ != other.xAxis_;
+	}
+
+	void Rotation3D::SetToIdentity()
+	{
+		xAxis_ = Vec3f(1.0f, 0.0f, 0.0f);
+		yAxis_ = Vec3f(0.0f, 1.0f, 0.0f);
+	}
+
+	Rotation3D& Rotation3D::Inverse() // Achieved by projecting the global coordinate system onto this rotation's axes (in linear algebra: equivalent to transposing the orthonormal basis)
+	{
+		const Vec3f zAxis = GetZAxis();
+
+		const Vec3f invXAxis(xAxis_.X, yAxis_.X, zAxis.X);
+		yAxis_ = Vec3f(xAxis_.Y, yAxis_.Y, zAxis.Y);
+
+		xAxis_ = invXAxis;
+
+		return Normalize();
+	}
+
+	Rotation3D& Rotation3D::AddGlobalRotation(const Rotation3D& globalRotation)
+	{
+		const Vec3f globalRotationZAxis = globalRotation.GetZAxis();
+
+		xAxis_ = globalRotation.xAxis_ * xAxis_.X + globalRotation.yAxis_ * xAxis_.Y + globalRotationZAxis * xAxis_.Z; // Rotate xAxis (treated as a rotated point)
+		yAxis_ = globalRotation.xAxis_ * yAxis_.X + globalRotation.yAxis_ * yAxis_.Y + globalRotationZAxis * yAxis_.Z; // Rotate yAxis (treated as a rotated point)
+
+		return Normalize();
+	}
+
+	Rotation3D& Rotation3D::AddGlobalRotation(Vec3f rotAxis, float degrees)
+	{
+		// Idea: rotate rotAxis to (1.0f, 0.0f, 0.0f) -> rotate around it -> rotate rotAxis back
+
+		rotAxis.Normalize();
+
+		// Reject clearly invalid input
+		if (!std::isfinite(rotAxis.X) || !std::isfinite(rotAxis.Y) || !std::isfinite(rotAxis.Z) ||
+			(rotAxis.X == 0.0f && rotAxis.Y == 0.0f && rotAxis.Z == 0.0f))
+		{
+			return *this;
+		}
+
+		Vec3f helperAxis;
+		// If the Y component is not very dominant, it is stable to use (0.0f, 1.0f, 0.0f) to derive a Y axis for the rotation
+		if (std::abs(rotAxis.Y) < std::abs(rotAxis.X) + std::abs(rotAxis.Z))
+			helperAxis = Vec3f(0.0f, 1.0f, 0.0f);
+		else
+			helperAxis = Vec3f(1.0f, 0.0f, 0.0f);
+
+		const Rotation3D rotation(rotAxis, helperAxis);
+		const Rotation3D inverseRotation = rotation.GetInverse();
+
+		// Rotate so rotAxis is aligned with the global X axis -> rotate around the global X axis -> rotate back
+		return AddGlobalRotation(inverseRotation).AddGlobalRotationX(degrees).AddGlobalRotation(rotation);
+	}
+
+	Rotation3D& Rotation3D::AddGlobalRotationX(float degrees) // Treat like a 2D rotation in the YZ plane
+	{
+		const float rad = degrees * (float)RADIANS_PER_DEGREE;
+
+		const float c = std::cos(rad);
+		const float s = std::sin(rad);
+
+		xAxis_ = Vec3f(xAxis_.X, xAxis_.Z * s + xAxis_.Y * c, xAxis_.Z * c - xAxis_.Y * s);
+		yAxis_ = Vec3f(yAxis_.X, yAxis_.Z * s + yAxis_.Y * c, yAxis_.Z * c - yAxis_.Y * s);
+
+		return Normalize();
+	}
+
+	Rotation3D& Rotation3D::AddGlobalRotationY(float degrees) // Treat like a 2D rotation in the XZ plane
+	{
+		const float rad = degrees * (float)RADIANS_PER_DEGREE;
+
+		const float c = std::cos(rad);
+		const float s = std::sin(rad);
+
+		xAxis_ = Vec3f(xAxis_.X * c - xAxis_.Z * s, xAxis_.Y, xAxis_.X * s + xAxis_.Z * c);
+		yAxis_ = Vec3f(yAxis_.X * c - yAxis_.Z * s, yAxis_.Y, yAxis_.X * s + yAxis_.Z * c);
+
+		return Normalize();
+	}
+
+	Rotation3D& Rotation3D::AddGlobalRotationZ(float degrees) // Treat like a 2D rotation in the XY plane
+	{
+		const float rad = degrees * (float)RADIANS_PER_DEGREE;
+
+		const float s = std::sin(rad);
+		const float c = std::cos(rad);
+
+		xAxis_ = Vec3f(xAxis_.X * c + xAxis_.Y * s, xAxis_.Y * c - xAxis_.X * s, xAxis_.Z);
+		yAxis_ = Vec3f(yAxis_.X * c + yAxis_.Y * s, yAxis_.Y * c - yAxis_.X * s, yAxis_.Z);
+
+		return Normalize();
+	}
+
+	Rotation3D& Rotation3D::AddLocalRotation(const Rotation3D& localRotation)
+	{
+		const Vec3f zAxis = GetZAxis();
+
+		const Vec3f newXAxis = xAxis_ * localRotation.xAxis_.X + yAxis_ * localRotation.xAxis_.Y + zAxis * localRotation.xAxis_.Z; // Rotate localRotation.xAxis (treated as a rotated point)
+		yAxis_ = xAxis_ * localRotation.yAxis_.X + yAxis_ * localRotation.yAxis_.Y + zAxis * localRotation.yAxis_.Z; // Rotate localRotation.yAxis (treated as a rotated point)
+
+		xAxis_ = newXAxis;
+
+		return Normalize();
+	}
+
+	Rotation3D& Rotation3D::AddLocalRotationX(float degrees)
+	{
+		const float rad = degrees * (float)RADIANS_PER_DEGREE;
+
+		const float s = std::sin(rad);
+		const float c = std::cos(rad);
+
+		const Vec3f zAxis = xAxis_.GetCrossProduct(yAxis_);
+		yAxis_ = yAxis_ * c - zAxis * s;  // localRotY.Y = c, localRotY.Z = -s
+
+		return Normalize();
+	}
+
+	Rotation3D& Rotation3D::AddLocalRotationY(float degrees)
+	{
+		const float rad = degrees * (float)RADIANS_PER_DEGREE;
+
+		const float s = std::sin(rad);
+		const float c = std::cos(rad);
+
+		const Vec3f zAxis = xAxis_.GetCrossProduct(yAxis_);
+		xAxis_ = xAxis_ * c + zAxis * s; // localRotX.X = c, localRotX.Z = s
+
+		return Normalize();
+	}
+
+	Rotation3D& Rotation3D::AddLocalRotationZ(float degrees)
+	{
+		const float rad = degrees * (float)RADIANS_PER_DEGREE;
+
+		const float s = std::sin(rad);
+		const float c = std::cos(rad);
+
+		const Vec3f tempX = xAxis_;
+		xAxis_ = xAxis_ * c - yAxis_ * s; // localRotX.X = c, localRotX.Y = -s						   
+		yAxis_ = tempX * s + yAxis_ * c; // localRotY.X = s, localRotY.Y = c;
+
+		return Normalize();
+	}
+
+	void Rotation3D::RotatePoint(Vec3& point) const
+	{
+		point = (Vec3(xAxis_) * point.X) + (Vec3(yAxis_) * point.Y) + (Vec3(GetZAxis()) * point.Z);
+	}
+
+	void Rotation3D::RotatePoints(Vec3* points, int count) const
+	{
+		// Convert to Vec3 for repeated use
+		Vec3 xAxis(xAxis_);
+		Vec3 yAxis(yAxis_);
+		Vec3 zAxis(GetZAxis());
+
+		for (int i = 0; i < count; i++)
+			points[i] = (xAxis * points[i].X) + (yAxis * points[i].Y) + (zAxis * points[i].Z);
+	}
+
+	void Rotation3D::InverseRotatePoint(Vec3& point) const
+	{
+		Vec3 zAxis(GetZAxis());
+		const Vec3 invXAxis(xAxis_.X, yAxis_.X, zAxis.X);
+		const Vec3 invYAxis(xAxis_.Y, yAxis_.Y, zAxis.Y);
+		zAxis = Vec3(xAxis_.Z, yAxis_.Z, zAxis.Z);  // Reuse zAxis as invZAxis
+
+		point = (invXAxis * point.X) + (invYAxis * point.Y) + (zAxis * point.Z);
+	}
+
+	void Rotation3D::InverseRotatePoints(Vec3* points, int count) const
+	{
+		Vec3 zAxis(GetZAxis());
+		const Vec3 invXAxis(xAxis_.X, yAxis_.X, zAxis.X);
+		const Vec3 invYAxis(xAxis_.Y, yAxis_.Y, zAxis.Y);
+		zAxis = Vec3(xAxis_.Z, yAxis_.Z, zAxis.Z); // Reuse zAxis as invZAxis
+
+		for (int i = 0; i < count; i++)
+			points[i] = (invXAxis * points[i].X) + (invYAxis * points[i].Y) + (zAxis * points[i].Z);
+	}
+
+	void Rotation3D::RotatePoint(Vec3f& point) const
+	{
+		point = (xAxis_ * point.X) + (yAxis_ * point.Y) + (GetZAxis() * point.Z);
+	}
+
+	void Rotation3D::RotatePoints(Vec3f* points, int count) const
+	{
+		Vec3f zAxis(GetZAxis());
+
+		for (int i = 0; i < count; i++)
+			points[i] = (xAxis_ * points[i].X) + (yAxis_ * points[i].Y) + (zAxis * points[i].Z);
+	}
+
+	void Rotation3D::InverseRotatePoint(Vec3f& point) const
+	{
+		Vec3f zAxis(GetZAxis());
+		const Vec3f invXAxis(xAxis_.X, yAxis_.X, zAxis.X);
+		const Vec3f invYAxis(xAxis_.Y, yAxis_.Y, zAxis.Y);
+		zAxis = Vec3f(xAxis_.Z, yAxis_.Z, zAxis.Z); // Reuse zAxis as invZAxis
+
+		point = (invXAxis * point.X) + (invYAxis * point.Y) + (zAxis * point.Z);
+	}
+
+	void Rotation3D::InverseRotatePoints(Vec3f* points, int count) const
+	{
+		Vec3f zAxis(GetZAxis());
+		const Vec3f invXAxis(xAxis_.X, yAxis_.X, zAxis.X);
+		const Vec3f invYAxis(xAxis_.Y, yAxis_.Y, zAxis.Y);
+		zAxis = Vec3f(xAxis_.Z, yAxis_.Z, zAxis.Z); // Reuse zAxis as invZAxis
+
+		for (int i = 0; i < count; i++)
+			points[i] = (invXAxis * points[i].X) + (invYAxis * points[i].Y) + (zAxis * points[i].Z);
+	}
+
+	Rotation3D Rotation3D::GetLocalRotationOf(const Rotation3D& globalRotation) const
+	{
+		// Projects the axes of globalRotation onto this rotation's axes
+
+		const Vec3f zAxis = GetZAxis();
+
+		const Vec3f xAxis(xAxis_.GetDotProduct(globalRotation.xAxis_),
+			yAxis_.GetDotProduct(globalRotation.xAxis_),
+			zAxis.GetDotProduct(globalRotation.xAxis_));
+
+		const Vec3f yAxis(xAxis_.GetDotProduct(globalRotation.yAxis_),
+			yAxis_.GetDotProduct(globalRotation.yAxis_),
+			zAxis.GetDotProduct(globalRotation.yAxis_));
+
+		return Rotation3D(xAxis, yAxis);
+	}
+
+	Rotation3D Rotation3D::GetInverse() const
+	{
+		const Vec3f zAxis = GetZAxis();
+
+		return Rotation3D(Vec3f(xAxis_.X, yAxis_.X, zAxis.X), Vec3f(xAxis_.Y, yAxis_.Y, zAxis.Y));
+	}
+
+	const Vec3f& Rotation3D::GetXAxis() const
+	{
+		return xAxis_;
+	}
+
+	const Vec3f& Rotation3D::GetYAxis() const
+	{
+		return yAxis_;
+	}
+
+	Vec3f Rotation3D::GetZAxis() const
+	{
+		return xAxis_.GetCrossProduct(yAxis_);
+	}
+
+	bool Rotation3D::operator==(const Rotation3D& other) const
+	{
+		return xAxis_ == other.xAxis_ && yAxis_ == other.yAxis_;
+	}
+
+	bool Rotation3D::operator!=(const Rotation3D& other) const
+	{
+		return xAxis_ != other.xAxis_ || yAxis_ != other.yAxis_;
+	}
+
+
+	Rotation3D::Rotation3D(const Vec3f& xAxis, const Vec3f& yAxis) : xAxis_(xAxis), yAxis_(yAxis)
+	{
+		Normalize();
+	}
+
+	Rotation3D& Rotation3D::Normalize()
+	{
+		// The idea is to simply subtract any overlap from yAxis that it has with the xAxis and normalize it (in linear algebra: also known as Gram–Schmidt orthogonalization).
+		xAxis_.Normalize();
+		float overlapOnXAxis = yAxis_.GetDotProduct(xAxis_);
+		yAxis_ -= (xAxis_ * overlapOnXAxis);
+		yAxis_.Normalize();
+
+		return *this;
+	}
+
+
+	// ############################################################### ROTATION OPERATIONS ###################################################
+
+
+	Rotation2D GetInterpolated(const Rotation2D& startRotation, const Rotation2D& endRotation, float interpolationAlpha)
+	{
+		if (interpolationAlpha >= 1.0f) return endRotation;
+
+		if (interpolationAlpha <= 0.0f) return startRotation;
+
+		const Vec2f xAxis = endRotation.GetXAxis();
+		const Vec2f previousXAxis = startRotation.GetXAxis();
+
+		// 60+ degrees is more than enough to abort interpolation
+		if (xAxis.GetDotProduct(previousXAxis) < 0.5f)
+			return endRotation;
+
+		Vec2f interpolatedRotX = GetInterpolatedUnchecked(previousXAxis, xAxis, interpolationAlpha);
+		interpolatedRotX.Normalize();
+
+		return Rotation2D(interpolatedRotX.X, interpolatedRotX.Y);
+	}
+
+
+	Rotation3D GetInterpolated(const Rotation3D& startRotation, const Rotation3D& endRotation, float interpolationAlpha)
+	{
+		if (interpolationAlpha >= 1.0f) return endRotation;
+
+		if (interpolationAlpha <= 0.0f) return startRotation;
+
+		const Vec3f xAxis = endRotation.GetXAxis();
+		const Vec3f yAxis = endRotation.GetYAxis();
+		const Vec3f prevXAxis = startRotation.GetXAxis();
+		const Vec3f prevYAxis = startRotation.GetYAxis();
+
+		// 60+ degrees is more than enough to abort interpolation
+		if ((xAxis.GetDotProduct(prevXAxis) < 0.5f) || (yAxis.GetDotProduct(prevYAxis) < 0.5f))
+			return endRotation;
+
+		const Vec3f interpolatedRotX = GetInterpolatedUnchecked(prevXAxis, xAxis, interpolationAlpha);
+		const Vec3f interpolatedRotY = GetInterpolatedUnchecked(prevYAxis, yAxis, interpolationAlpha);
+
+		return Rotation3D(interpolatedRotX, interpolatedRotY);
+	}
+
+
+
+
+	// ################################################################################### TRANSFORMS ##################################################################
+
+
+	Transform2D::Transform2D(const Vec2& position, const Vec2f& scale, const Rotation2D& rotation) :
+		Position(position),
+		Scale(scale),
+		Rotation(rotation)
+	{}
+
+	void Transform2D::TransformPoints(Vec2* points, int count) const
+	{
+		// Convert Scale to Vec2 for repeated use
+		const Vec2 scale(Scale);
+
+		for (int i = 0; i < count; i++)
+		{
+			// Scale the current point
+			points[i] *= scale;
+
+			// Rotate the current point
+			Rotation.RotatePoint(points[i]);
+
+			// Translate the current point
+			points[i] += Position;
+		}
+	}
+
+	void Transform2D::TransformPoint(Vec2& point) const
+	{
+		// Scale the point
+		point *= Vec2(Scale);
+
+		// Rotate the point
+		Rotation.RotatePoint(point);
+
+		// Translate the point
+		point += Position;
+	}
+
+	void Transform2D::InverseTransformPoints(Vec2* points, int count) const
+	{
+		// Precompute inverse scale. GetSafeDivision() keeps it finite.
+		const Vec2 invScale(GetSafeDivision(1.0, (double)Scale.X), GetSafeDivision(1.0, (double)Scale.Y));
+
+		for (int i = 0; i < count; i++)
+		{
+			// Reverse translation
+			points[i] -= Position;
+
+			// Reverse rotation
+			Rotation.InverseRotatePoint(points[i]);
+
+			// Reverse scale
+			points[i] *= invScale;
+		}
+	}
+
+	void Transform2D::InverseTransformPoint(Vec2& point) const
+	{
+		// Reverse translation
+		point -= Position;
+
+		// Reverse rotation
+		Rotation.InverseRotatePoint(point);
+
+		// Reverse scale
+		point.X = GetSafeDivision(point.X, (double)Scale.X);
+		point.Y = GetSafeDivision(point.Y, (double)Scale.Y);
+	}
+
+	bool Transform2D::operator==(const Transform2D& other) const
+	{
+		return Position == other.Position && Scale == other.Scale && Rotation == other.Rotation;
+	}
+
+	bool Transform2D::operator!=(const Transform2D& other) const
+	{
+		return Position != other.Position || Scale != other.Scale || Rotation != other.Rotation;
+	}
+
+
+
+	Transform3D::Transform3D(const Vec3& position, const Vec3f& scale, const Rotation3D& rotation) : Position(position), Scale(scale), Rotation(rotation)
+	{}
+
+	void Transform3D::TransformPoints(Vec3* points, int count) const
+	{
+		// Convert to Vec3 for repeated use
+		const Vec3 scale(Scale);
+		const Vec3 xAxis(Rotation.GetXAxis());
+		const Vec3 yAxis(Rotation.GetYAxis());
+		const Vec3 zAxis(Rotation.GetZAxis());
+
+		for (int i = 0; i < count; i++)
+		{
+			// Scale the current point
+			points[i] = points[i] * scale;
+
+			// Rotate the current point
+			points[i] = xAxis * points[i].X + yAxis * points[i].Y + zAxis * points[i].Z;
+
+			// Translate the current point
+			points[i] += Position;
+		}
+	}
+
+	void Transform3D::TransformPoint(Vec3& point) const
+	{
+		// Scale the point
+		point *= Vec3(Scale);
+
+		// Rotate the point
+		Rotation.RotatePoint(point);
+
+		// Translate the point
+		point += Position;
+	}
+
+	void Transform3D::InverseTransformPoints(Vec3* points, int count) const
+	{
+		// Precompute inverse scale. GetSafeDivision() keeps it finite.
+		Vec3 invScale(GetSafeDivision(1.0, (double)Scale.X), GetSafeDivision(1.0, (double)Scale.Y), GetSafeDivision(1.0, (double)Scale.Z));
+		Rotation3D inverseRotation = Rotation.GetInverse();
+
+		for (int i = 0; i < count; i++)
+		{
+			// Reverse translation
+			points[i] -= Position;
+
+			// Reverse rotation
+			inverseRotation.RotatePoint(points[i]);
+
+			// Reverse scale
+			points[i] *= invScale;
+		}
+	}
+
+	void Transform3D::InverseTransformPoint(Vec3& point) const
+	{
+		// Reverse translation
+		point -= Position;
+
+		// Reverse rotation
+		Rotation.GetInverse().RotatePoint(point);
+
+		// Reverse scale
+		point.X = GetSafeDivision(point.X, (double)Scale.X);
+		point.Y = GetSafeDivision(point.Y, (double)Scale.Y);
+		point.Z = GetSafeDivision(point.Z, (double)Scale.Z);
+	}
+
+	bool Transform3D::operator==(const Transform3D& other) const
+	{
+		return Position == other.Position && Scale == other.Scale && Rotation == other.Rotation;
+	}
+
+	bool Transform3D::operator!=(const Transform3D& other) const
+	{
+		return Position != other.Position || Scale != other.Scale || Rotation != other.Rotation;
+	}
+
+
+	// ############################################################### TRANSFORM OPERATIONS ###################################################
+
+
+	Transform2D GetInterpolated(const Transform2D& startTransform, const Transform2D& endTransform, float interpolationAlpha)
+	{
+		if (interpolationAlpha >= 1.0f) return endTransform;
+
+		if (interpolationAlpha <= 0.0f) return startTransform;
+
+		Vec2 interpolatedPosition = GetInterpolatedUnchecked(startTransform.Position, endTransform.Position, (double)interpolationAlpha);
+		Vec2f interpolatedScale = GetInterpolatedUnchecked(startTransform.Scale, endTransform.Scale, interpolationAlpha);
+		Rotation2D interpolatedRotation = GetInterpolated(startTransform.Rotation, endTransform.Rotation, interpolationAlpha);
+
+		return Transform2D(interpolatedPosition, interpolatedScale, interpolatedRotation);
+	}
+
+
+	Transform3D GetInterpolated(const Transform3D& startTransform, const Transform3D& endTransform, float interpolationAlpha)
+	{
+		if (interpolationAlpha >= 1.0f) return endTransform;
+
+		if (interpolationAlpha <= 0.0f) return startTransform;
+
+		Vec3 interpolatedPosition = GetInterpolatedUnchecked(startTransform.Position, endTransform.Position, (double)interpolationAlpha);
+		Vec3f interpolatedScale = GetInterpolatedUnchecked(startTransform.Scale, endTransform.Scale, interpolationAlpha);
+		Rotation3D interpolatedRotation = GetInterpolated(startTransform.Rotation, endTransform.Rotation, interpolationAlpha);
+
+		return Transform3D(interpolatedPosition, interpolatedScale, interpolatedRotation);
+	}
+
+}
