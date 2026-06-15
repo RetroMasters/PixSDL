@@ -2,16 +2,19 @@
 
 ![PixSDL demo](Media/SceneLooping.gif)
 
-Demo scene showing seamless scene looping, 2D-to-3D scene mapping, and animated sprite mesh deformation.
+Demo showing seamless scene looping, 2D-to-3D scene mapping, and animated mesh deformation.
 
 ---
 
 ## Overview
 
-PixSDL is a foundational sprite-based 2D/3D game engine core written in C++,
-built on top of SDL2. It provides core systems such as modular input handling,
-audio, texture handling, sprite animation, motion-interpolated sprite rendering,
-and a double-buffered game loop with stable pacing.
+PixSDL is a sprite-based 2D/3D game engine core written in C++ and built on top
+of SDL2. The repository is currently provided as a runnable Visual Studio project
+so the engine code can be explored, modified, and tested directly.
+
+It provides core systems such as modular input handling, audio, texture
+handling, sprite animation, sprite rendering with motion interpolation, and a
+double-buffered game loop with stable pacing.
 
 PixSDL is designed as a foundation for:
 
@@ -25,11 +28,12 @@ PixSDL is designed as a foundation for:
 
 ## Design Philosophy
 
-PixSDL assumes an SDL2-based environment and uses SDL2's renderer API as its
-current rendering backend. The core library follows a stable double-buffered
-game loop architecture. It is single-threaded by design to keep behavior simple
-and compatible with SDL2 subsystems, while systems built on top are not
-conceptually limited to a single-threaded model.
+PixSDL is built around SDL2 and uses SDL2's renderer API as its rendering
+backend. The library provides a stable double-buffered game loop framework,
+while also exposing modular building blocks that can be combined at different
+levels. It is single-threaded by design to keep behavior simple and compatible
+with SDL2 subsystems, while systems built on top of PixSDL are not generally
+limited to a single-threaded model.
 
 Within these constraints, the library is designed as a scalable foundation for
 real-time applications, with a strong focus on flexibility, robustness, and
@@ -37,10 +41,9 @@ clarity.
 
 The architecture is object-oriented, but favors small, composable building
 blocks with clear and minimal responsibilities. The code aims to strike a
-balance between being explicit and avoiding unnecessary visual noise. Explicit
-casts are used where they improve type clarity, while modern C++ features are
-used sparingly to preserve readability, portability, and wide compiler
-compatibility.
+balance between being explicit and avoiding unnecessary visual noise. C++
+language features are chosen and used deliberately to preserve readability,
+portability, and wide compiler compatibility.
 
 ---
 
