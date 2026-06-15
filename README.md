@@ -9,19 +9,27 @@ Demo scene showing seamless scene looping, 2D-to-3D scene mapping, and animated 
 ## Overview
 
 PixSDL is a foundational sprite-based 2D/3D game engine core written in C++,
-built on top of SDL2. It provides core systems such as input handling, audio,
-texture handling, efficient sprite rendering, sprite animation, and a traditional
-double-buffered game loop lifecycle.
+built on top of SDL2. It provides core systems such as modular input handling,
+audio, texture handling, sprite animation, motion-interpolated sprite rendering,
+and a double-buffered game loop with stable pacing.
+
+PixSDL is designed as a foundation for:
+
+- Traditional pixel-art games
+- 2D/3D Super Scaler-style games
+- Sprite-based 2D and 2.5D games with large coordinate spaces
+- Simulation-oriented sandbox games with texture-rendered pixel worlds at traditional pixel-art resolutions
+- A fantasy-console-style rendering API for direct game development workflows
 
 ---
 
 ## Design Philosophy
 
-PixSDL assumes an SDL2-based environment, including SDL2 rendering, and follows
-a traditional double-buffered game loop architecture. The core library is
-single-threaded by design to keep behavior simple, predictable, and compatible
-with SDL2 subsystems, while systems built on top are not conceptually limited to
-a single-threaded model.
+PixSDL assumes an SDL2-based environment and uses SDL2's renderer API as its
+current rendering backend. The core library follows a stable double-buffered
+game loop architecture. It is single-threaded by design to keep behavior simple
+and compatible with SDL2 subsystems, while systems built on top are not
+conceptually limited to a single-threaded model.
 
 Within these constraints, the library is designed as a scalable foundation for
 real-time applications, with a strong focus on flexibility, robustness, and
