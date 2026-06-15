@@ -29,9 +29,10 @@ clarity.
 
 The architecture is object-oriented, but favors small, composable building
 blocks with clear and minimal responsibilities. The code aims to strike a
-balance between being explicit and avoiding unnecessary visual noise. Modern C++
-features are used sparingly to preserve readability, portability, and wide
-compiler compatibility.
+balance between being explicit and avoiding unnecessary visual noise. Explicit
+casts are used where they improve type clarity, while modern C++ features are
+used sparingly to preserve readability, portability, and wide compiler
+compatibility.
 
 ---
 
