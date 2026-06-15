@@ -37,9 +37,7 @@ namespace pix
 
 	Game::~Game()
 	{
-		AbstractUpdateLoopScheduler* updateLoopScheduler = GetUpdateLoopScheduler();
-		if (updateLoopScheduler)
-			delete updateLoopScheduler;
+	   delete GetUpdateLoopScheduler();
 	}
 
 

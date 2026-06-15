@@ -361,3 +361,15 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Keep required third-party SDL2 x64 runtime and import libraries
+!SDL2/**/lib/
+!SDL2/**/lib/x64/
+!SDL2/**/lib/x64/*.dll
+!SDL2/**/lib/x64/*.lib
+
+# Do not include debug symbols or optional codec packages
+SDL2/**/lib/**/*.pdb
+SDL2/**/lib/**/optional/
+SDL2/**/lib/x86/
+SDL2/**/lib/**/SDL2test.lib
