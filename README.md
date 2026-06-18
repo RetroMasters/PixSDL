@@ -47,6 +47,13 @@ portability, and wide compiler compatibility.
 
 ---
 
+## Requirements
+
+- Windows 10 or later
+- Visual Studio 2026 with C++ desktop development support
+  
+---
+
 ## Build
 
 - Download the repository
@@ -55,12 +62,6 @@ portability, and wide compiler compatibility.
 
 The repository includes the required SDL2 development files.
 
----
-
-## Requirements
-
-- Visual Studio 2026 with C++ desktop development support
-  
 ---
 
 ## License
