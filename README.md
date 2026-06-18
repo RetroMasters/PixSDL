@@ -20,7 +20,7 @@ PixSDL is designed as a foundation for:
 
 - Traditional pixel-art games
 - 2D/3D Super Scaler-style games
-- Sprite-based 2D and 2.5D games with large coordinate spaces
+- Sprite-based games with large coordinate spaces
 - Simulation-oriented sandbox games with texture-rendered pixel worlds at traditional pixel-art resolutions
 - A fantasy-console-style rendering API for direct game development workflows
 
@@ -59,13 +59,8 @@ The repository includes the required SDL2 development files.
 
 ## Requirements
 
-- Visual Studio 2026
-- C++14
-- SDL2
-- SDL2_image
-- SDL2_ttf
-- SDL2_mixer
- 
+- Visual Studio 2026 with C++ desktop development support
+  
 ---
 
 ## License
