@@ -60,7 +60,7 @@ portability, and wide compiler compatibility.
 - Open `PixSDL.slnx` in Visual Studio 2026
 - Build and run the project
 
-The repository includes the required SDL2 development files.
+The repository includes the required SDL2 development files. The provided Visual Studio setup targets x64.
 
 ---
 
